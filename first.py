@@ -1,4 +1,8 @@
 import web
+# import MySQLdb
+# import MySQLdb.cursors
+
+render = web.template.render('templates')
 
 urls = (
     # '/(.*)', 'hello'
@@ -6,21 +10,23 @@ urls = (
     '/blog/\d+', 'blog',
     '/(.*)', 'hello',
 )
-app = web.application(urls, globals())
+# app = web.application(urls, globals())
 
 class index:
     def GET(self):
-        return 'index.method'
+        query = web.input()
+        return web.seeother('http://www.douban.com/')
 
 class blog:
-    def GET(self):
-        return 'blog method'
     def POST(self):
-        return 'blog post method'
+        data = web.input()
+        return data
+    def GET(self):
+        return web.ctx.env
 
 class hello:
     def GET(self, name):
-        return open(r'index.html', 'r').read()
+        return render.hello2('zhourong')
 
 if __name__ == "__main__":
     app.run()
